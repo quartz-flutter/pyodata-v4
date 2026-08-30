@@ -47,7 +47,8 @@ pyodata/
   v2/model.py        ~2.8k lines. CSDL 1.0/2.0 XML parser -> Schema object graph
   v2/service.py      ~2.0k lines. Request builders, proxies, JSON decoding, batch
   vendor/SAP.py      SAP BTP auth helper + SAP error-header response hook
-tests/               263 tests, pytest, ~91% line coverage on pyodata/
+tests/               396 tests, pytest, ~93% line coverage on pyodata/
+  fixtures/v4/       pinned OASIS ABNF corpus + annotation vocabularies
 docs/usage/*.rst     user guide (sphinx)
 docs/v4/             the v4 project: research, plan, fixtures  <- start here
 ```
@@ -58,22 +59,45 @@ anything v4-related.
 ## Commands
 
 ```bash
-# deps (note: pylint==2.8.3 in dev-requirements.txt does NOT build on Python >=3.11)
-python3 -m pip install lxml pytest requests responses pytest-cov
+python3 -m pip install -r dev-requirements.txt      # or, for the fast run only:
+python3 -m pip install lxml pytest requests responses pytest-cov pyyaml
 
 make test                       # pytest with coverage
 python3 -m pytest tests -q --ignore=tests/integration    # fast unit run
 python3 -m pytest tests -q --cov=pyodata --cov-report=term
-make lint                       # pylint + flake8 (see caveat above)
-make check                      # lint + test
+make lint                       # pylint + flake8
+make coverage-floors            # full suite + fail if coverage regressed
+make check                      # lint + coverage-floors
 make doc                        # sphinx into docs/_build/html
 ```
 
-**Verified baseline (Python 3.11, lxml 6.x): 263 passed, 91% total coverage.**
+**Verified baseline (Python 3.11, lxml 6.x): 396 passed, 93% total coverage
+under `make test`; 364 passed, 92% under the fast unit run.**
 Record any deviation from this baseline; do not let it drift downward.
+`make coverage-floors` enforces it — the per-module floors live in
+`tests/check_coverage_floors.py` and are a ratchet: raise them, never lower
+them. A new module with no floor recorded fails the check by design.
 
 `tests/integration/networking_libraries/` needs `pytest-aiohttp`, `httpx` and
-`respx`; it is excluded from the fast run above.
+`respx`; it is excluded from the fast run above. Note that `pyodata/client.py`
+reaches 100% coverage only when those tests run, so the floors are measured
+against the full suite.
+
+## The phase 0 gates
+
+Three checks now guard every later change. If one fails, that is the finding —
+do not adjust the gate to make it pass.
+
+| Gate | File | What breaks it |
+|---|---|---|
+| G1 public API snapshot | `tests/test_public_api_snapshot.py` + `.json` | any public name, signature or member that moves, is renamed or disappears. Intentional additions: rerun with `--update` in the same commit |
+| G2 v2 wire-format golden | `tests/test_wire_format_golden_v2.py` | any change to the bytes v2 puts on the wire — method, path, query string, headers, body, `$filter` rendering, Edm literals, batch framing |
+| coverage floors | `tests/check_coverage_floors.py` | coverage falling below the recorded baseline, per module or in total |
+
+One golden expectation is a pinned *known defect*, marked DEFECT in place and
+due to change in phase 1: the `__range` lookup emitting `gte`/`lte`
+(`service.py:1319`), which are not OData operators in any version. Updating
+that expectation belongs in the same commit as the fix.
 
 ## Conventions
 

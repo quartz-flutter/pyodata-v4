@@ -28,6 +28,28 @@ python3 -m pytest tests -q --ignore=tests/integration --cov=pyodata --cov-report
 Every phase re-states these numbers. Test count may only go **up**; coverage on
 `pyodata/v2/` may only go **up**.
 
+### After phase 0
+
+Measured at commit `3ef1ea1`, same interpreter and lxml. Phase 0 changed no
+`pyodata/` source, so the movement is entirely new tests exercising existing
+code:
+
+```
+396 passed          (make test, the full suite)
+                             Stmts   Miss  Cover
+pyodata/client.py               57      0  100%
+pyodata/exceptions.py           14      0  100%
+pyodata/v2/model.py           1787    117   93%
+pyodata/v2/service.py         1009     84   92%
+pyodata/vendor/SAP.py           45      0  100%
+TOTAL                         2914    201   93%
+```
+
+The fast unit run (`--ignore=tests/integration`) gives 364 passed at 92%;
+`pyodata/client.py` is covered only by the integration tests, which is why the
+floors below are measured against the full suite. These numbers are now
+enforced rather than recorded — see G5.
+
 ## The five rules
 
 ### R1 — v2 wire behaviour is frozen
@@ -104,7 +126,10 @@ tests/test_public_api_snapshot.py
 tests/public_api_snapshot.json
 ```
 
-**Build this first, in phase 0, before any refactoring.**
+**Built in phase 0, before any refactoring** — 157 module-level names pinned,
+including the historic spellings and the deprecated shims. Regenerate after an
+intentional addition with
+`python3 tests/test_public_api_snapshot.py --update`, in the same commit.
 
 ### G2 — v2 wire-format golden tests
 
@@ -124,6 +149,13 @@ These are cheap to write (the getters are already public — `docs/usage/urls.rs
 documents them as a feature) and they are what makes R1 enforceable rather than
 aspirational.
 
+**Built in phase 0**: `tests/test_wire_format_golden_v2.py`, 87 tests. Verified
+as a tripwire by mutation — reversing the `substringof` argument order,
+dropping the `X-Requested-With` header, dropping `Edm.Int64`'s `L` suffix, and
+removing the blank line the SAP gateway needs for an empty batch part each fail
+it; the last two pass the pre-existing 224 model and service tests silently,
+which is the case for the gate in one line.
+
 ### G3 — cross-version isolation tests
 
 Parse a v2 document and a v4 document in the same process, in both orders, and
@@ -135,10 +167,23 @@ mutable state introduced later.
 `python-tests-compatibility.yml` runs Python 3.10–3.14 × lxml 4.6.5–6.1.1. v4
 code must pass the same matrix. No new runtime dependency beyond `lxml`.
 
-*Known CI defect to fix in phase 0:* `dev-requirements.txt` pins
+*Known CI defect, fixed in phase 0:* `dev-requirements.txt` pinned
 `pylint==2.8.3`, which pulls a `wrapt` that fails to build on Python ≥3.11, so
-`make lint` and `make check` cannot run locally on a modern interpreter. Unpin or
-raise it.
+`make lint` and `make check` could not run locally on a modern interpreter. Now
+`pylint>=3.3` / `flake8>=7.0`, with the options modern pylint removed dropped
+from `.pylintrc` and its newer modernization checks disabled — the v2 code they
+flag is frozen by R1 and must not be rewritten for lint's sake.
+
+### G5 — coverage floors
+
+`tests/check_coverage_floors.py`, run by `make coverage-floors` and by CI in
+place of the bare `make test`, fails the build when any module or the total
+drops below the recorded baseline above. A module with no floor recorded is
+itself a failure, which makes declaring one part of adding a module — as the
+phase 3 and 4 exit criteria require of `pyodata/v4/`.
+
+The floors are a ratchet: raise them when coverage rises comfortably past
+them, never lower them to make a build pass.
 
 ## What "no loss of relevant functionality" covers
 
