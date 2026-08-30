@@ -116,6 +116,16 @@ An explicit `odata_version` **skips detection entirely** — `odata_version=2`
 must take the identical code path it takes today, so that no existing user's
 behaviour can change as a side effect of adding detection.
 
+Making auto-detect the default is safe under rule R1 because it is
+behaviour-preserving for every document that classifies as v2: detection reads
+the version marker and hands the document to the unchanged v2 parser. The only
+users whose observable behaviour changes are (a) those feeding v4 metadata to
+the default client, who today get the baffling EnumType failure and instead get
+a working v4 client, and (b) those feeding a document detection cannot classify
+— which the v2 parser already rejects today (`Unsupported Edmx namespace`), so
+the change there is the exception message, not success-vs-failure. A test must
+assert both properties.
+
 Independently and immediately: when a v4 document reaches the *v2* parser, it
 must fail with a clear message ("this looks like OData 4.0 metadata; pass
 `odata_version=4`") instead of today's

@@ -9,12 +9,11 @@ S/4HANA) actually emit. Implement against 4.0 and accept 4.01 extensions.
 |---|---|
 | OData Version 4.01 Part 1: Protocol | `https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html` |
 | OData Version 4.01 Part 2: URL Conventions | `https://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part2-url-conventions.html` |
-| OData Version 4.01 Part 3: CSDL (concepts) | `https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/odata-csdl-xml-v4.01.html` |
 | OData CSDL **XML** Representation 4.01 | `https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/odata-csdl-xml-v4.01.html` |
 | OData CSDL **JSON** Representation 4.01 | `https://docs.oasis-open.org/odata/odata-csdl-json/v4.01/odata-csdl-json-v4.01.html` |
 | OData **JSON Format** 4.01 | `https://docs.oasis-open.org/odata/odata-json-format/v4.01/odata-json-format-v4.01.html` |
 | OData Extension for Data Aggregation (`$apply`) 4.0 | `https://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/odata-data-aggregation-ext-v4.0.html` |
-| OData 4.0 (errata 03) Part 1–3 | `https://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html` |
+| OData 4.0 (errata 03) Part 1–3 — note 4.0 had a "Part 3: CSDL"; in 4.01 CSDL became the two standalone documents above | `https://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html` |
 | ABNF grammars (`odata-abnf-construction-rules.txt`) | `https://docs.oasis-open.org/odata/odata/v4.01/csprd06/abnf/` |
 
 > **`docs.oasis-open.org` and `www.odata.org` are blocked by this sandbox's
