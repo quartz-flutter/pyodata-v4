@@ -73,11 +73,24 @@ Both are properties of the corpus, not defects, and both are handled by
 
 ### `vocabularies/` — CSDL 4.0 annotation vocabularies
 
-The seven vocabularies named in
-[`../../../docs/v4/research/resources.md`](../../../docs/v4/research/resources.md),
-needed by phase 3 item 8 to map v4 annotations onto the same
-`label`/`creatable`/`updatable`/`filterable` surface that v2 exposes through
-`sap:*` attributes.
+Three vocabularies, not the seven listed in
+[`../../../docs/v4/research/resources.md`](../../../docs/v4/research/resources.md).
+These are the ones that carry terms phase 3 item 8 actually has to map, so
+that v4 metadata presents the same `label` / `creatable` / `updatable` /
+`sortable` / `filterable` / `text` surface that v2 builds from `sap:*`
+attributes:
+
+| Need, as v2 expresses it | v4 term |
+|---|---|
+| `sap:label`, `sap:text` | `Common.Label`, `Common.Text` |
+| SAP value help (`SAP_ANNOTATION_VALUE_LIST`) | `Common.ValueList` |
+| `sap:creatable`, `sap:updatable` | `Capabilities.InsertRestrictions`, `Capabilities.UpdateRestrictions` |
+| `sap:filterable`, `sap:sortable` | `Capabilities.FilterRestrictions`, `Capabilities.SortRestrictions` |
+| — (v4 additions the above build on) | `Core.Description`, `Core.Computed`, `Core.Immutable` |
+
+They are here to pin the exact term names, record shapes and property names, so
+the mapping is read off the normative definition rather than guessed. Getting a
+record property name wrong is a silent mis-mapping, not a crash.
 
 From [`oasis-tcs/odata-vocabularies`](https://github.com/oasis-tcs/odata-vocabularies),
 commit `b4597c0a21adc57a80c98046a616eb84f86149a8` (`main`, 2026-08-26).
@@ -87,9 +100,6 @@ Licence: OASIS IPR Policy, RF on RAND Mode.
 |---|---|---|
 | `Org.OData.Core.V1.xml` | `Org.OData.Core.V1` | `cb39e966748a7ef5d831cd5f886f4f3ddf1cfa8a4f6b0186c832028c5502482c` |
 | `Org.OData.Capabilities.V1.xml` | `Org.OData.Capabilities.V1` | `fd4d9e5cc4daba2afc76239765716e81f4ed0ec76d8548037b853b009864f339` |
-| `Org.OData.Measures.V1.xml` | `Org.OData.Measures.V1` | `f9f782f15104238d3d994ca23a2625ce9e1b0090a37cf1aee97db246a8113dac` |
-| `Org.OData.Validation.V1.xml` | `Org.OData.Validation.V1` | `6c3d04e614dbc4bb8b89b6cb730d7957c4da897ed79d69a449d626d72059668e` |
-| `Org.OData.Aggregation.V1.xml` | `Org.OData.Aggregation.V1` | `8dd92fb5cbc4929bbc84508d460464ff0d1893e822032a80723fb58d4f123385` |
 
 From [`SAP/odata-vocabularies`](https://github.com/SAP/odata-vocabularies),
 commit `db776bc686e186e32536e527e7a6e51000beaf47` (`main`, 2026-08-27).
@@ -98,7 +108,29 @@ Licence: Apache-2.0.
 | File | Upstream name | Namespace | SHA-256 |
 |---|---|---|---|
 | `com.sap.vocabularies.Common.v1.xml` | `vocabularies/Common.xml` | `com.sap.vocabularies.Common.v1` | `1a58bd3424eca21a0c535a6db9ec5e825b9890de3bef63de8d6fde8b0aedc414` |
-| `com.sap.vocabularies.UI.v1.xml` | `vocabularies/UI.xml` | `com.sap.vocabularies.UI.v1` | `d76b60eed4f42f9bd19144705c385a8bf337b8e3a58f1ac670d810fda941ac11` |
 
-The two SAP files are renamed to their declared schema namespace so that all
-seven are addressable the same way; their contents are unmodified.
+The SAP file is renamed to its declared schema namespace so all three are
+addressable the same way; its contents are unmodified.
+
+### Deliberately not vendored
+
+Vendored data is not free — it is reviewed, licensed and carried forever — so
+a file earns its place by having a named consumer, not by being related to the
+subject. These were vendored in the first pass and then removed for failing
+that test:
+
+| Not here | Why not | If you need it |
+|---|---|---|
+| `com.sap.vocabularies.UI.v1.xml` | 2,067 lines of Fiori **screen layout** terms — `LineItem`, `FieldGroup`, `DataPoint`, `KPI`, `GeoPoints`. This is an HTTP client library; it renders nothing. No consumer, now or in any planned phase. | SAP commit `db776bc`, `vocabularies/UI.xml` |
+| `Org.OData.Aggregation.V1.xml` | Only used by `$apply`, which is phase 5 — the phase the roadmap itself calls severable. Speculative until that ships. | OASIS commit `b4597c0` |
+| `Org.OData.Measures.V1.xml` | Unit/currency annotations. v2 exposes no unit concept, so there is nothing to map them onto. | OASIS commit `b4597c0` |
+| `Org.OData.Validation.V1.xml` | No consumer in the planned v4 surface. | OASIS commit `b4597c0` |
+
+Re-adding any of them is a copy from the commit named above plus a row in the
+table here and an entry in `VOCABULARIES` in
+`tests/test_v4_reference_corpus.py`. Do that when a phase has a concrete use
+for the terms, not before.
+
+The same applies to `odata-aggregation-abnf.txt` /
+`odata-aggregation-testcases.yaml` and the temporal pair, which live at ABNF
+commit `a31c8db` alongside the two files that are vendored here.

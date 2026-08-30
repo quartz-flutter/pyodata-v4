@@ -32,8 +32,11 @@ the safety net that makes the later phases checkable.
   `Edm.Duration` primitives. Used to produce the measurements in document 1.
 - [`../../tests/fixtures/v4/`](../../tests/fixtures/v4/PROVENANCE.md) — the
   vendored normative material: the OASIS ABNF grammar and its 840-vector test
-  corpus, and the seven annotation vocabularies phase 3 maps onto the v2
-  `sap:*` surface. Pinned by commit, never fetched at test time.
+  corpus, and the three annotation vocabularies (Core, Capabilities, SAP
+  Common) carrying the terms phase 3 maps onto the v2 `sap:*` surface. Pinned
+  by commit, never fetched at test time. The other four vocabularies named in
+  `research/resources.md` are deliberately absent — PROVENANCE.md records why,
+  and a test keeps them out.
 
 ## Status
 

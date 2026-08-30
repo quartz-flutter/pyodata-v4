@@ -23,16 +23,27 @@ from tests.conftest import contents_of_fixtures_file, load_abnf_testcases
 FIXTURES_V4 = pathlib.Path(__file__).parent / 'fixtures' / 'v4'
 EDM_V4_NAMESPACE = 'http://docs.oasis-open.org/odata/ns/edm'
 
-# Namespace each vendored vocabulary must declare, keyed by file name. Phase 3
-# item 8 maps these onto the v2 sap:* annotation surface.
+# Namespace each vendored vocabulary must declare, keyed by file name. These
+# three, and only these three, carry the terms that phase 3 item 8 maps onto
+# the facts v2 exposes from sap:* attributes -- Common.Label / Common.Text /
+# Common.ValueList, the Capabilities.*Restrictions terms behind
+# creatable/updatable/sortable/filterable, and the Core terms the other two
+# build on. See PROVENANCE.md for why the rest are deliberately not here.
 VOCABULARIES = {
     'Org.OData.Core.V1.xml': 'Org.OData.Core.V1',
     'Org.OData.Capabilities.V1.xml': 'Org.OData.Capabilities.V1',
-    'Org.OData.Measures.V1.xml': 'Org.OData.Measures.V1',
-    'Org.OData.Validation.V1.xml': 'Org.OData.Validation.V1',
-    'Org.OData.Aggregation.V1.xml': 'Org.OData.Aggregation.V1',
     'com.sap.vocabularies.Common.v1.xml': 'com.sap.vocabularies.Common.v1',
-    'com.sap.vocabularies.UI.v1.xml': 'com.sap.vocabularies.UI.v1',
+}
+
+# Vocabularies deliberately NOT vendored, with the reasoning recorded in
+# PROVENANCE.md. Listed here so the decision is enforced rather than advisory:
+# re-adding one has to be a conscious edit to this file, at which point you
+# have to say what consumes it.
+EXCLUDED_VOCABULARIES = {
+    'com.sap.vocabularies.UI.v1.xml',
+    'Org.OData.Aggregation.V1.xml',
+    'Org.OData.Measures.V1.xml',
+    'Org.OData.Validation.V1.xml',
 }
 
 
@@ -131,3 +142,19 @@ def test_vendored_files_are_documented():
     assert vendored, 'no vendored files found'
     for name in vendored:
         assert name in provenance, f'{name} is vendored but not recorded in PROVENANCE.md'
+
+
+def test_excluded_vocabularies_stay_out():
+    """The vocabularies judged to have no consumer are absent.
+
+    PROVENANCE.md explains each one. Vendored data is reviewed, licensed and
+    carried forever, so a file earns its place by having a named consumer --
+    this keeps one from drifting back in unnoticed.
+    """
+
+    present = {path.name for path in (FIXTURES_V4 / 'vocabularies').iterdir()}
+
+    assert not present & EXCLUDED_VOCABULARIES, (
+        'a vocabulary recorded as deliberately not vendored is back on disk; '
+        'if it now has a consumer, move it into VOCABULARIES and update '
+        'PROVENANCE.md in the same commit')
