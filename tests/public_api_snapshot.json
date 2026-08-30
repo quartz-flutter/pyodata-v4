@@ -366,7 +366,6 @@
    "members": {}
   },
   "ParserError": {
-   "init": "(self, *args, **kwds)",
    "members": {
     "ANNOTATION": "attribute",
     "ASSOCIATION": "attribute",

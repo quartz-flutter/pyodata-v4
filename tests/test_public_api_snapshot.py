@@ -75,7 +75,14 @@ def _describe_class(cls):
             members[name] = 'attribute'
     init = getattr(cls, '__init__', None)
     description = {'members': members}
-    if init is not None and inspect.isfunction(init):
+    # Only a constructor pyodata itself defines is pyodata's API. An inherited
+    # stdlib __init__ (Enum, Exception, ...) is an implementation detail whose
+    # signature -- and even whose presence here -- varies by Python version:
+    # enum.Enum.__init__ is a Python function on 3.11+ but a C
+    # wrapper_descriptor on 3.10, so recording it would fail the snapshot on
+    # half the supported matrix.
+    defined_here = (getattr(init, '__module__', None) or '').startswith('pyodata')
+    if init is not None and inspect.isfunction(init) and defined_here:
         description['init'] = _signature_of(init) or '(?)'
     return description
 
