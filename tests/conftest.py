@@ -1,8 +1,10 @@
 """PyTest Fixtures"""
+import json
 import logging
 import os
 
 import pytest
+import yaml
 
 from pyodata.v2.model import schema_from_xml, Types
 
@@ -14,6 +16,59 @@ def contents_of_fixtures_file(file_name):
 
     with open(path_to_file, 'rb') as md_file:
         return md_file.read()
+
+
+ABNF_TESTCASES_FILE = 'fixtures/v4/abnf/odata-abnf-testcases.yaml'
+
+
+class _ODataLiteralLoader(yaml.SafeLoader):
+    """A YAML loader that leaves every plain scalar as text.
+
+    The ABNF corpus is a corpus of OData URL fragments, and YAML's implicit
+    resolvers actively damage them: "0000-01-01" is a legal Edm.Date literal
+    but not a Python date (safe_load raises "year 0 is out of range" on it),
+    and an Input of "true" or "42" would arrive as a bool or an int rather
+    than the text the grammar is about. Dropping the implicit resolvers makes
+    every scalar a str, which is what a grammar corpus means.
+    """
+
+
+_ODataLiteralLoader.yaml_implicit_resolvers = {}
+
+
+def load_abnf_testcases():
+    """Load the vendored OASIS ABNF test-case corpus.
+
+    Returns the list of vectors, each a dict with at least 'Rule' and 'Input'.
+    A vector carrying 'FailAt' is a negative case, and its value -- the
+    character offset at which parsing must fail -- is returned as an int;
+    every other value is text.
+
+    The corpus is vendored byte-exact from oasis-tcs/odata-abnf (see
+    tests/fixtures/v4/PROVENANCE.md), which means it contains one deliberate
+    raw tab: the vector proving a tab separates "$orderby=Name<TAB>asc".
+    PyYAML's scanner refuses a tab in that position, so any scalar containing
+    one is rewritten here into an equivalent double-quoted form before
+    parsing. json.dumps produces exactly that (a JSON string is a valid YAML
+    double-quoted scalar) and round-trips the tab, so the vector reaches the
+    caller intact rather than being silently normalised away.
+    """
+
+    lines = contents_of_fixtures_file(ABNF_TESTCASES_FILE).decode('utf-8').split('\n')
+
+    for index, line in enumerate(lines):
+        if '\t' not in line:
+            continue
+        key, _, value = line.partition(': ')
+        lines[index] = f'{key}: {json.dumps(value)}'
+
+    testcases = yaml.load('\n'.join(lines), Loader=_ODataLiteralLoader)['TestCases']
+
+    for testcase in testcases:
+        if 'FailAt' in testcase:
+            testcase['FailAt'] = int(testcase['FailAt'])
+
+    return testcases
 
 
 @pytest.fixture

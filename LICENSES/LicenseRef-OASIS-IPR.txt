@@ -1,0 +1,31 @@
+OASIS IPR Policy
+================
+
+These terms apply to the OASIS OData normative material vendored under
+tests/fixtures/v4/ (the ABNF construction rules and test cases, and the
+Org.OData.* vocabulary documents). They do not apply to the rest of this
+repository, which is licensed under Apache-2.0.
+
+The text below is reproduced from the LICENSE.md of the upstream OASIS TC
+repositories, https://github.com/oasis-tcs/odata-abnf and
+https://github.com/oasis-tcs/odata-vocabularies, at the commits recorded in
+tests/fixtures/v4/PROVENANCE.md.
+
+License Terms
+-------------
+
+Content in this GitHub code repository has been contributed
+(https://www.oasis-open.org/policies-guidelines/ipr#def-contribution) by OASIS
+TC Members, and is governed by the OASIS policies, including the Intellectual
+Property Rights (IPR) Policy (https://www.oasis-open.org/policies-guidelines/ipr),
+the Technical Committee (TC) Process
+(https://www.oasis-open.org/policies-guidelines/tc-process), Bylaws
+(https://www.oasis-open.org/policies-guidelines/bylaws), and the Technical
+Committee's choice of IPR Mode
+(https://www.oasis-open.org/policies-guidelines/ipr#def-ipr-mode) (viz, RF on
+RAND Terms Mode
+(https://www.oasis-open.org/policies-guidelines/ipr#RF-on-RAND-Mode)),
+including any applicable declarations
+(https://www.oasis-open.org/committees/odata/ipr.php). Feedback from non-TC
+members, if any, is governed by the terms of the OASIS Feedback License
+(https://www.oasis-open.org/policies-guidelines/ipr#appendixa).

@@ -6,3 +6,19 @@ Source: https://github.com/SAP/python-pyodata
 Files: *
 Copyright: 2021 SAP SE or an SAP affiliate company and task-explorer contributors
 License: Apache-2.0
+
+Files: tests/fixtures/v4/abnf/* tests/fixtures/v4/vocabularies/Org.OData.*
+Copyright: OASIS Open
+License: LicenseRef-OASIS-IPR
+Comment: Pinned copies of OASIS OData normative material, vendored for offline
+ testing and never modified. Governed by the OASIS IPR Policy (RF on RAND
+ Mode), https://www.oasis-open.org/policies-guidelines/ipr, not by this
+ repository's Apache-2.0 licence. Exact upstream commits and checksums are
+ recorded in tests/fixtures/v4/PROVENANCE.md.
+
+Files: tests/fixtures/v4/vocabularies/com.sap.vocabularies.*
+Copyright: SAP SE or an SAP affiliate company and OData Vocabularies contributors
+License: Apache-2.0
+Comment: Pinned copies from https://github.com/SAP/odata-vocabularies, renamed
+ to their declared schema namespace but otherwise unmodified. See
+ tests/fixtures/v4/PROVENANCE.md.
