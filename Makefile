@@ -20,6 +20,8 @@ FLAKE8_CONFIG_FILE=.flake8
 FLAKE8_PARAMS=
 
 COVERAGE_BIN=coverage3
+COVERAGE_JSON=coverage.json
+COVERAGE_FLOORS_SCRIPT=$(TESTS_DIR)/check_coverage_floors.py
 COVERAGE_REPORT_ARGS=--skip-covered
 COVERAGE_CMD_REPORT=$(COVERAGE_BIN) report
 COVERAGE_CMD_HTML=$(COVERAGE_BIN) html
@@ -52,8 +54,15 @@ report-coverage-html: .coverage
 	@ $(COVERAGE_CMD_HTML) $(COVERAGE_HTML_ARGS) $(COVERAGE_REPORT_FILES)
 	@ echo "Report: file://$$(pwd)/$(COVERAGE_HTML_DIR)/index.html"
 
+# Runs the full suite and fails if line coverage dropped below the recorded
+# baseline. See docs/v4/plan/compatibility-contract.md.
+.PHONY: coverage-floors
+coverage-floors:
+	$(MAKE) test PYTEST_PARAMS="--cov-report=term --cov-report=json:$(COVERAGE_JSON) --cov=$(PYTHON_MODULE)"
+	$(PYTHON_BIN) $(COVERAGE_FLOORS_SCRIPT) $(COVERAGE_JSON)
+
 .PHONY=check
-check: lint test
+check: lint coverage-floors
 
 .PHONY=doc
 doc:
@@ -62,4 +71,4 @@ doc:
 
 .PHONY=clean
 clean:
-	rm --preserve-root -rf $(COVERAGE_HTML_DIR) .coverage
+	rm --preserve-root -rf $(COVERAGE_HTML_DIR) .coverage $(COVERAGE_JSON)

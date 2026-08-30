@@ -72,4 +72,4 @@ jobs:
 
     - name: Test
       run: |
-        make test report-coverage
+        make coverage-floors report-coverage
