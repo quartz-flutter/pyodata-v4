@@ -143,10 +143,17 @@ isolation test passes. ≥90% coverage on `pyodata/v4/model.py`.
 
 **Exit:** `tests/test_service_v4.py` mirrors the shape of `test_service_v2.py`
 for every operation, using `responses`. Golden tests pin every v4 URL and body.
-The ABNF test corpus vendored in phase 0 runs as a parametrized suite over the
-literal and URL builders — **positive and negative cases both**, since the
-negative vectors are what catch over-permissive escaping. ≥90% coverage on
-`pyodata/v4/service.py`.
+The ABNF test corpus vendored in phase 0 runs as a parametrized suite. It is a
+*parsing* corpus (`Rule` + `Input`, `FailAt` for negatives), so use it in the
+directions where it actually applies: positive vectors for the literal rules
+(`primitiveLiteral`, `keyPredicate`, per-type literal rules) feed
+`from_literal`/round-trip assertions; negative vectors are must-reject inputs
+and must-never-produce outputs for the renderers (they are what catch
+over-permissive escaping — e.g. the corpus rejects the v2 binary form
+`X'1a2B3c4D'`). Validating *generated* full URLs against the `odataUri` grammar
+needs an ABNF engine; that is allowed as a **test-only** dependency (the
+lxml-only rule binds runtime deps), or skipped in favour of the golden URL
+tests. ≥90% coverage on `pyodata/v4/service.py`.
 
 ---
 

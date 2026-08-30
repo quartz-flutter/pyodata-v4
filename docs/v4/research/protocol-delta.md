@@ -95,9 +95,9 @@ This is the largest single source of silent wrongness, because a v2 literal is
 | `Edm.DateTimeOffset` | `datetimeoffset'2000-01-01T00:00:00Z'` | `2000-01-01T00:00:00Z` |
 | `Edm.Date` | — | `2000-01-01` |
 | `Edm.TimeOfDay` | — | `13:20:00` |
-| `Edm.Duration` | `time'PT1H'` | `duration'PT1H'` |
+| `Edm.Duration` | `time'PT1H'` | `duration'PT1H'` (prefix optional in 4.01) |
 | `Edm.Guid` | `guid'0000...'` | `0000...` (bare) |
-| `Edm.Binary` | `binary'0FAB'` / `X'0FAB'` | `binary'0FAB'` (4.0); base64url, unprefixed, in 4.01 |
+| `Edm.Binary` | `binary'0FAB'` / `X'0FAB'` (hex content) | `binary'T0RhdGE'` — prefix kept, **content is base64url**, and the v2 `X'...'` form is invalid (ABNF `binaryLiteral`; the OASIS corpus has a negative vector rejecting `X'1a2B3c4D'`) |
 | `Edm.Int64` | `123L` | `123` |
 | `Edm.Decimal` | `1.5M` | `1.5` |
 | `Edm.Double` | `1.5d` | `1.5` |
@@ -149,10 +149,10 @@ library builds is wrong for v4** unless the traits are dialect-scoped.
 |---|---|---|
 | comparison | `eq ne lt le gt ge` | **=** |
 | logical | `and or not` | **=** |
-| arithmetic | `add sub mul div mod` | **=** plus `divby` |
+| arithmetic | `add sub mul div mod` | **=** plus `divby` (4.01) |
 | substring test | `substringof(sub, str) eq true` | **`contains(str, sub)`** — different name **and reversed argument order** **B** |
 | prefix/suffix | `startswith(str, sub)` / `endswith` | **=** |
-| string fns | `length indexof replace substring tolower toupper trim concat` | **=** plus `matchesPattern` |
+| string fns | `length indexof replace substring tolower toupper trim concat` | **=** plus `matchesPattern` (4.01) |
 | date fns | `year month day hour minute second` | **=** plus `fractionalseconds totaloffsetminutes date time mindatetime maxdatetime now` |
 | math | `round floor ceiling` | **=** |
 | type fns | `isof cast` | **=** |
