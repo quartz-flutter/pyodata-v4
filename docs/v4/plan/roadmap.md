@@ -24,9 +24,16 @@ Nothing about v4. This is what makes every later phase safe.
    `EntityKey.to_key_string()`, and the multipart batch body. See
    [compatibility-contract.md](compatibility-contract.md) G2.
 4. Record the baseline in CI so a coverage regression fails the build.
+5. Vendor the normative reference material into the repo, pinned by commit:
+   `abnf/odata-abnf-construction-rules.txt` and `abnf/odata-abnf-testcases.yaml`
+   from `oasis-tcs/odata-abnf` into `tests/fixtures/v4/`, and the OASIS + SAP
+   vocabulary CSDL documents. See
+   [../research/resources.md](../research/resources.md). Pinned copies, never
+   fetched at test time.
 
 **Exit:** `make check` runs clean on Python 3.11+. Test count > 263. The golden
-tests fail loudly if any v2 byte on the wire changes.
+tests fail loudly if any v2 byte on the wire changes. The ABNF corpus is in the
+tree and readable by the test suite.
 
 ---
 
@@ -136,7 +143,10 @@ isolation test passes. ≥90% coverage on `pyodata/v4/model.py`.
 
 **Exit:** `tests/test_service_v4.py` mirrors the shape of `test_service_v2.py`
 for every operation, using `responses`. Golden tests pin every v4 URL and body.
-≥90% coverage on `pyodata/v4/service.py`.
+The ABNF test corpus vendored in phase 0 runs as a parametrized suite over the
+literal and URL builders — **positive and negative cases both**, since the
+negative vectors are what catch over-permissive escaping. ≥90% coverage on
+`pyodata/v4/service.py`.
 
 ---
 

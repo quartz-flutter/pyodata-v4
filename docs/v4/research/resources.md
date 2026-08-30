@@ -17,11 +17,49 @@ S/4HANA) actually emit. Implement against 4.0 and accept 4.01 extensions.
 | OData 4.0 (errata 03) Part 1–3 | `https://docs.oasis-open.org/odata/odata/v4.0/odata-v4.0-part1-protocol.html` |
 | ABNF grammars (`odata-abnf-construction-rules.txt`) | `https://docs.oasis-open.org/odata/odata/v4.01/csprd06/abnf/` |
 
-> **Note for this sandbox:** `docs.oasis-open.org` and `www.odata.org` are
-> blocked by the network egress proxy. The URIs above are recorded for use
-> outside the sandbox. When a normative detail is needed and cannot be fetched,
-> encode the assumption as a test with a comment naming the spec section, so it
-> is auditable later rather than invisible.
+> **`docs.oasis-open.org` and `www.odata.org` are blocked by this sandbox's
+> egress proxy — but the normative sources are on GitHub, which is reachable.**
+> Use the repositories in the next section instead of the URIs above. The URIs
+> remain the citable addresses for the published documents.
+
+## Normative sources as git repositories (the practical route)
+
+Verified reachable and cloned on 2026-08-30.
+
+| Repository | Contents |
+|---|---|
+| `https://github.com/oasis-tcs/odata-specs` | **The specs themselves**, as authored markdown. Directories: `odata-csdl/`, `odata-json-format/`, `odata-url-conventions/`, `odata-protocol/`, `odata-data-aggregation-ext/`, `odata-temporal-ext/`. ~1.4 MB of normative text. |
+| `https://github.com/oasis-tcs/odata-abnf` | **`abnf/odata-abnf-construction-rules.txt`** (1298 lines, the complete URL and literal grammar) and **`abnf/odata-abnf-testcases.yaml`** (3770 lines of positive *and negative* test vectors for 4.01 and 4.0). |
+| `https://github.com/oasis-tcs/odata-vocabularies` | OASIS vocabulary definitions (Core, Capabilities, Measures, Validation, Aggregation) as CSDL. |
+| `https://github.com/SAP/odata-vocabularies` | SAP vocabularies (`com.sap.vocabularies.*`) as CSDL. |
+
+### Two cautions when using `odata-specs`
+
+1. **`main` is the 4.02 working draft**, not a published standard — its
+   frontmatter templates resolve to `.../v4.02/...`. Target 4.0/4.01 behaviour
+   and treat anything that appears only on `main` as provisional. Published
+   stages are tagged (`git ls-remote --tags origin`); the aggregation extension
+   has proper `V4.0_CS03`/`CS04` tags, the core bundle currently only carries
+   `core/V4.02_CSD01`/`CSD02`.
+2. The markdown carries templating placeholders (`$$$pagetitle$$$`) and
+   cross-reference macros. It is normative prose, not a rendered document.
+
+### `odata-abnf-testcases.yaml` is the highest-value artefact here
+
+It is a machine-readable corpus keyed by grammar rule — `entitySetName`,
+`entityFunctionImport`, `complexColProperty`, `actionImport`, and ~100 more —
+with positive cases and negative cases annotated by the character offset at
+which parsing should fail. It maps directly onto a pytest-parametrized test
+suite for the v4 literal and URL layer, which is exactly the area where a
+hand-written client accumulates silent bugs. **Vendor a pinned copy into
+`tests/fixtures/v4/` rather than fetching it at test time.**
+
+### Spot-checks already performed against these sources
+
+| Claim in [protocol-delta.md](protocol-delta.md) | Confirmed by |
+|---|---|
+| `contains(field, value)` — argument order reversed vs v2 `substringof` | `odata-url-conventions/5 Query Options.md:606,627` — `contains(CompanyName,'Alfreds')` |
+| `ContainsTarget` is a navigation-property facet | `odata-csdl/7 Structural Property.md:553-560` |
 
 ## OData v2 — for the frozen side of the contract
 

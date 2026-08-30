@@ -168,6 +168,8 @@ a downgrade, not a port.
 | G2 v2 wire-format golden tests | 0 | todo |
 | G3 cross-version isolation (parse v2 and v4 in one process, both orders) | 3 | todo |
 | G4 CI matrix 3.10–3.14 × lxml 4.6.5–6.1.1 | 6 | todo |
+| OASIS ABNF test corpus vendored (`tests/fixtures/v4/`) | 0 | todo |
+| ABNF corpus runs green over the v4 literal/URL builders | 4 | todo |
 | Baseline held: ≥263 tests, ≥91% total coverage | all | **holding** |
 | `pylint` runnable on Python ≥3.11 | 0 | todo |
 | v2 defect: enum range check `<` -> `<=` (`model.py:1634`) | 1 | todo |

@@ -36,5 +36,6 @@ Everything here is research and planning. No `pyodata/v4/` code exists yet.
 | Phase | 0 — research and planning (this directory) |
 | v2 baseline | 263 tests passing, 91% line coverage, Python 3.11 / lxml 6.x |
 | v4 code | none yet |
+| Normative specs | obtained — OASIS sources are on GitHub, see [research/resources.md](research/resources.md) |
 | Branch | `claude/odata-v4-compatibility-50ejxo` |
 | Last updated | 2026-08-30 |
