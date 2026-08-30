@@ -155,7 +155,7 @@ a downgrade, not a port.
 | `response_hook` | `ODataHttpRequest` | shared via `core/http.py` | 2 | todo |
 | URL-only usage (Locust pattern) | `get_path`/`get_query_params` | same getters | 4 | todo |
 | `retain_null` | `Config.retain_null` | same | 3 | todo |
-| Static metadata | `Client(metadata=...)` | same | 1 | todo |
+| Static metadata | `Client(metadata=...)` | same (v4 dispatch requires phase 3's parser; phase 1 only detects) | 3 | todo |
 | Cross-origin next-link rejection | `_build_request` | shared via `core/http.py` | 2 | todo |
 
 ---
