@@ -1,0 +1,878 @@
+{
+ "pyodata": {
+  "Client": {
+   "members": {
+    "ODATA_VERSION_2": "attribute",
+    "build_async_client": "staticmethod(url, connection, odata_version=2, namespaces=None, config: pyodata.v2.model.Config = None, metadata: str = None, response_hook=None)"
+   }
+  },
+  "client": "module",
+  "exceptions": "module",
+  "v2": "module",
+  "vendor": "module"
+ },
+ "pyodata.client": {
+  "Client": {
+   "members": {
+    "ODATA_VERSION_2": "attribute",
+    "build_async_client": "staticmethod(url, connection, odata_version=2, namespaces=None, config: pyodata.v2.model.Config = None, metadata: str = None, response_hook=None)"
+   }
+  },
+  "HttpError": {
+   "init": "(self, message, response)",
+   "members": {
+    "VendorType": "attribute"
+   }
+  },
+  "PyODataException": {
+   "members": {}
+  },
+  "logging": "module",
+  "pyodata": "module",
+  "warnings": "module"
+ },
+ "pyodata.exceptions": {
+  "ExpressionError": {
+   "members": {}
+  },
+  "HttpError": {
+   "init": "(self, message, response)",
+   "members": {
+    "VendorType": "attribute"
+   }
+  },
+  "ProgramError": {
+   "members": {}
+  },
+  "PyODataException": {
+   "members": {}
+  },
+  "PyODataModelError": {
+   "members": {}
+  },
+  "PyODataParserError": {
+   "members": {}
+  }
+ },
+ "pyodata.v2": {
+  "model": "module",
+  "service": "module"
+ },
+ "pyodata.v2.model": {
+  "ABC": "class (external)",
+  "ANNOTATION_NAMESPACES": "attribute",
+  "Annotation": {
+   "init": "(self, kind, target, qualifier=None)",
+   "members": {
+    "Kinds": "class",
+    "element": "property",
+    "element_namespace": "property",
+    "from_etree": "staticmethod(target, annotation_node)",
+    "kind": "property",
+    "target": "property"
+   }
+  },
+  "Association": {
+   "init": "(self, name)",
+   "members": {
+    "end_by_role": "method(self, end_role)",
+    "end_roles": "property",
+    "from_etree": "staticmethod(association_node, config: pyodata.v2.model.Config)",
+    "name": "property",
+    "referential_constraint": "property"
+   }
+  },
+  "AssociationSet": {
+   "init": "(self, name, association_type_name, association_type_namespace, end_roles)",
+   "members": {
+    "association_type": "property",
+    "association_type_name": "property",
+    "association_type_namespace": "property",
+    "end_by_entity_set": "method(self, entity_set)",
+    "end_by_role": "method(self, end_role)",
+    "end_roles": "property",
+    "from_etree": "staticmethod(association_set_node, config: pyodata.v2.model.Config)",
+    "name": "property"
+   }
+  },
+  "AssociationSetEndRole": {
+   "init": "(self, role, entity_set_name)",
+   "members": {
+    "entity_set": "property",
+    "entity_set_name": "property",
+    "from_etree": "staticmethod(end_node)",
+    "role": "property"
+   }
+  },
+  "Collection": {
+   "init": "(self, name, item_type)",
+   "members": {
+    "from_json": "method(self, value)",
+    "is_collection": "property",
+    "item_type": "property",
+    "to_literal": "method(self, value)",
+    "traits": "property"
+   }
+  },
+  "ComplexType": {
+   "init": "(self, name, label, is_value_list)",
+   "members": {}
+  },
+  "Config": {
+   "init": "(self, custom_error_policies=None, default_error_policy=None, xml_namespaces=None, retain_null=False)",
+   "members": {
+    "err_policy": "method(self, error: pyodata.v2.model.ParserError)",
+    "namespaces": "property",
+    "retain_null": "property",
+    "set_custom_error_policy": "method(self, policies: dict)",
+    "set_default_error_policy": "method(self, policy: pyodata.v2.model.ErrorPolicy)"
+   }
+  },
+  "DependentRole": {
+   "init": "(self, name, property_names)",
+   "members": {}
+  },
+  "EdmBinaryTypTraits": {
+   "init": "(self, prefix)",
+   "members": {
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmBooleanTypTraits": {
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmDateTimeOffsetTypTraits": {
+   "init": "(self)",
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_json": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmDateTimeTypTraits": {
+   "init": "(self)",
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_json": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmFPNumTypTraits": {
+   "init": "(self, precision, suffix, conversion)",
+   "members": {
+    "edm_double": "staticmethod()",
+    "edm_float": "staticmethod()",
+    "edm_single": "staticmethod()",
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_json": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmIntTypTraits": {
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmLongIntTypTraits": {
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmPrefixedTypTraits": {
+   "init": "(self, prefix)",
+   "members": {
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmStringTypTraits": {
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmStructTypTraits": {
+   "init": "(self, edm_type=None)",
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EdmStructTypeSerializer": {
+   "members": {
+    "from_json": "staticmethod(edm_type, value)",
+    "from_literal": "staticmethod(edm_type, value)",
+    "to_literal": "staticmethod(edm_type, value)"
+   }
+  },
+  "Edmx": {
+   "members": {
+    "parse": "staticmethod(metadata_xml, namespaces=None)"
+   }
+  },
+  "EndRole": {
+   "init": "(self, entity_type_info, multiplicity, role)",
+   "members": {
+    "MULTIPLICITY_ONE": "attribute",
+    "MULTIPLICITY_ZERO_OR_MORE": "attribute",
+    "MULTIPLICITY_ZERO_OR_ONE": "attribute",
+    "entity_type": "property",
+    "entity_type_info": "property",
+    "entity_type_name": "property",
+    "from_etree": "staticmethod(end_role_node)",
+    "multiplicity": "property",
+    "role": "property"
+   }
+  },
+  "EntitySet": {
+   "init": "(self, name, entity_type_info, addressable, creatable, updatable, deletable, searchable, countable, pageable, topable, req_filter, label)",
+   "members": {
+    "addressable": "property",
+    "countable": "property",
+    "creatable": "property",
+    "deletable": "property",
+    "entity_type": "property",
+    "entity_type_info": "property",
+    "from_etree": "staticmethod(entity_set_node)",
+    "label": "property",
+    "pageable": "property",
+    "requires_filter": "property",
+    "searchable": "property",
+    "topable": "property",
+    "updatable": "property"
+   }
+  },
+  "EntityType": {
+   "init": "(self, name, label, is_value_list)",
+   "members": {
+    "from_etree": "classmethod(type_node, config: pyodata.v2.model.Config)",
+    "key_proprties": "property",
+    "nav_proprties": "property",
+    "nav_proprty": "method(self, property_name)"
+   }
+  },
+  "Enum": "class (external)",
+  "EnumMember": {
+   "init": "(self, parent, name, value)",
+   "members": {
+    "name": "property",
+    "parent": "property",
+    "value": "property"
+   }
+  },
+  "EnumTypTrait": {
+   "init": "(self, enum_type)",
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "EnumType": {
+   "init": "(self, name, is_flags, underlying_type, namespace)",
+   "members": {
+    "from_etree": "staticmethod(type_node, namespace, config: pyodata.v2.model.Config)",
+    "is_flags": "property",
+    "namespace": "property",
+    "traits": "property"
+   }
+  },
+  "ErrorPolicy": {
+   "members": {
+    "resolve": "method(self, ekseption)"
+   }
+  },
+  "ExternalAnnontation": {
+   "members": {
+    "from_etree": "staticmethod(annotations_node)"
+   }
+  },
+  "FIX_SCREWED_UP_MAXIMUM_DATETIME_VALUE": "attribute",
+  "FIX_SCREWED_UP_MINIMAL_DATETIME_VALUE": "attribute",
+  "FunctionImport": {
+   "init": "(self, name, return_type_info, entity_set, parameters, http_method='GET')",
+   "members": {
+    "entity_set_name": "property",
+    "from_etree": "staticmethod(function_import_node, config: pyodata.v2.model.Config)",
+    "get_parameter": "method(self, parameter)",
+    "http_method": "property",
+    "parameters": "property",
+    "return_type": "property",
+    "return_type_info": "property"
+   }
+  },
+  "FunctionImportParameter": {
+   "init": "(self, name, type_info, nullable, max_length, precision, scale, mode)",
+   "members": {
+    "Modes": "class",
+    "mode": "property"
+   }
+  },
+  "Identifier": {
+   "init": "(self, name)",
+   "members": {
+    "name": "property",
+    "parse": "staticmethod(value)"
+   }
+  },
+  "IdentifierInfo": {
+   "members": {
+    "name": "attribute",
+    "namespace": "attribute"
+   }
+  },
+  "LOGGER_NAME": "attribute",
+  "MetadataBuilder": {
+   "init": "(self, xml, config=None)",
+   "members": {
+    "EDMX_WHITELIST": "attribute",
+    "EDM_WHITELIST": "attribute",
+    "build": "method(self)",
+    "config": "property",
+    "get_aliases": "staticmethod(edmx, config: pyodata.v2.model.Config)",
+    "update_global_variables_with_alias": "staticmethod(aliases)"
+   }
+  },
+  "NavigationTypeProperty": {
+   "init": "(self, name, from_role_name, to_role_name, association_info)",
+   "members": {
+    "association": "property",
+    "association_info": "property",
+    "from_etree": "staticmethod(node)",
+    "to_role": "property",
+    "typ": "property"
+   }
+  },
+  "NullAssociation": {
+   "init": "(self, name)",
+   "members": {}
+  },
+  "NullType": {
+   "init": "(self, name)",
+   "members": {}
+  },
+  "ParserError": {
+   "init": "(self, *args, **kwds)",
+   "members": {
+    "ANNOTATION": "attribute",
+    "ASSOCIATION": "attribute",
+    "COMPLEX_TYPE": "attribute",
+    "ENTITY_TYPE": "attribute",
+    "ENUM_TYPE": "attribute",
+    "PROPERTY": "attribute"
+   }
+  },
+  "PolicyFatal": {
+   "members": {
+    "resolve": "method(self, ekseption)"
+   }
+  },
+  "PolicyIgnore": {
+   "members": {
+    "resolve": "method(self, ekseption)"
+   }
+  },
+  "PolicyWarning": {
+   "init": "(self)",
+   "members": {
+    "resolve": "method(self, ekseption)"
+   }
+  },
+  "PrincipalRole": {
+   "init": "(self, name, property_names)",
+   "members": {}
+  },
+  "PyODataException": {
+   "members": {}
+  },
+  "PyODataModelError": {
+   "members": {}
+  },
+  "PyODataParserError": {
+   "members": {}
+  },
+  "ReferentialConstraint": {
+   "init": "(self, principal, dependent)",
+   "members": {
+    "dependent": "property",
+    "from_etree": "staticmethod(referential_constraint_node, config: pyodata.v2.model.Config)",
+    "principal": "property"
+   }
+  },
+  "ReferentialConstraintRole": {
+   "init": "(self, name, property_names)",
+   "members": {
+    "name": "property",
+    "property_names": "property"
+   }
+  },
+  "SAP_ANNOTATION_VALUE_LIST": "attribute",
+  "SAP_VALUE_HELPER_DIRECTIONS": "attribute",
+  "Schema": {
+   "init": "(self, config: pyodata.v2.model.Config)",
+   "members": {
+    "Declaration": "class",
+    "Declarations": "class",
+    "association": "method(self, association_name, namespace=None)",
+    "association_set": "method(self, set_name, namespace=None)",
+    "association_set_by_association": "method(self, association_name, namespace=None)",
+    "association_sets": "property",
+    "associations": "property",
+    "check_role_property_names": "method(self, role, entity_type_name, namespace)",
+    "complex_type": "method(self, type_name, namespace=None)",
+    "complex_types": "property",
+    "config": "property",
+    "entity_set": "method(self, set_name, namespace=None)",
+    "entity_sets": "property",
+    "entity_type": "method(self, type_name, namespace=None)",
+    "entity_types": "property",
+    "enum_type": "method(self, type_name, namespace=None)",
+    "enum_types": "property",
+    "from_etree": "staticmethod(schema_nodes, config: pyodata.v2.model.Config)",
+    "function_import": "method(self, function_import, namespace=None)",
+    "function_imports": "property",
+    "get_type": "method(self, type_info)",
+    "is_valid": "property",
+    "namespaces": "property",
+    "typ": "method(self, type_name, namespace=None)"
+   }
+  },
+  "StructType": {
+   "init": "(self, name, label, is_value_list)",
+   "members": {
+    "from_etree": "classmethod(type_node, config: pyodata.v2.model.Config)",
+    "has_proprty": "method(self, proprty_name)",
+    "is_collection": "property",
+    "is_value_list": "property",
+    "kind": "property",
+    "label": "property",
+    "null_value": "property",
+    "proprties": "method(self)",
+    "proprty": "method(self, property_name)",
+    "traits": "property"
+   }
+  },
+  "StructTypeProperty": {
+   "init": "(self, name, type_info, nullable, max_length, precision, scale, uncode, label, creatable, updatable, sortable, filterable, filter_restr, req_in_filter, text, visible, display_format, value_list, fixed_length=None)",
+   "members": {
+    "creatable": "property",
+    "date": "property",
+    "filter_restriction": "property",
+    "filterable": "property",
+    "from_etree": "staticmethod(entity_type_property_node)",
+    "label": "property",
+    "non_negative": "property",
+    "required_in_filter": "property",
+    "sortable": "property",
+    "struct_type": "property",
+    "text_proprty": "property",
+    "text_proprty_name": "property",
+    "uncode": "property",
+    "updatable": "property",
+    "upper_case": "property",
+    "value_helper": "property",
+    "value_list": "property",
+    "visible": "property"
+   }
+  },
+  "Typ": {
+   "init": "(self, name, null_value, traits=TypTraits, kind=None)",
+   "members": {
+    "Kinds": "class",
+    "Types": "attribute",
+    "is_collection": "property",
+    "kind": "property",
+    "null_value": "property",
+    "traits": "property"
+   }
+  },
+  "TypTraits": {
+   "members": {
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "to_json": "method(self, value)",
+    "to_literal": "method(self, value)"
+   }
+  },
+  "TypeInfo": {
+   "members": {
+    "is_collection": "attribute",
+    "name": "attribute",
+    "namespace": "attribute"
+   }
+  },
+  "Types": {
+   "members": {
+    "Types": "attribute",
+    "from_name": "staticmethod(name)",
+    "parse_type_name": "staticmethod(type_name)",
+    "register_type": "staticmethod(typ)"
+   }
+  },
+  "ValueHelper": {
+   "init": "(self, target, collection_path, label, search_supported)",
+   "members": {
+    "collection_path": "property",
+    "entity_set": "property",
+    "from_etree": "staticmethod(target, annotation_node)",
+    "label": "property",
+    "list_property_param": "method(self, name)",
+    "local_property_param": "method(self, name)",
+    "parameters": "property",
+    "proprty": "property",
+    "proprty_entity_type_name": "property",
+    "proprty_name": "property"
+   }
+  },
+  "ValueHelperParameter": {
+   "init": "(self, direction, local_property_name, list_property_name)",
+   "members": {
+    "Direction": "class",
+    "direction": "property",
+    "from_etree": "staticmethod(value_help_parameter_node)",
+    "list_property": "property",
+    "list_property_name": "property",
+    "local_property": "property",
+    "local_property_name": "property",
+    "value_helper": "property"
+   }
+  },
+  "VariableDeclaration": {
+   "init": "(self, name, type_info, nullable, max_length, precision, scale, fixed_length=None)",
+   "members": {
+    "MAXIMUM_LENGTH": "attribute",
+    "fixed_length": "property",
+    "from_json": "method(self, value)",
+    "from_literal": "method(self, value)",
+    "max_length": "property",
+    "nullable": "property",
+    "precision": "property",
+    "scale": "property",
+    "to_json": "method(self, value)",
+    "to_literal": "method(self, value)",
+    "typ": "property",
+    "type_info": "property"
+   }
+  },
+  "abstractmethod": "function (external)",
+  "attribute_get_bool": "function(node, attr, default)",
+  "auto": "class (external)",
+  "base64": "module",
+  "collections": "module",
+  "datetime": "module",
+  "etree": "module",
+  "io": "module",
+  "itertools": "module",
+  "logging": "module",
+  "metadata_attribute_get": "function(node, attr)",
+  "modlog": "function()",
+  "ms_since_epoch_to_datetime": "function(value, tzinfo)",
+  "parse_datetime_literal": "function(value)",
+  "re": "module",
+  "sap_attribute_get": "function(node, attr)",
+  "sap_attribute_get_bool": "function(node, attr, default)",
+  "sap_attribute_get_string": "function(node, attr)",
+  "schema_from_xml": "function(metadata_xml, namespaces=None)",
+  "str_to_bool": "function(value, attr, default)",
+  "warnings": "module"
+ },
+ "pyodata.v2.service": {
+  "BatchRequest": {
+   "init": "(self, url, connection, handler, request_id=None)",
+   "members": {
+    "get_boundary": "method(self)",
+    "get_method": "method(self)",
+    "get_path": "method(self)"
+   }
+  },
+  "BytesIO": "class (external)",
+  "Changeset": {
+   "init": "(self, url, connection, handler, request_id=None)",
+   "members": {
+    "get_boundary": "method(self)"
+   }
+  },
+  "EntityContainer": {
+   "init": "(self, service)",
+   "members": {}
+  },
+  "EntityCreateRequest": {
+   "init": "(self, url, connection, handler, entity_set, last_segment=None, response_hook=None)",
+   "members": {
+    "get_body": "method(self)",
+    "get_default_headers": "method(self)",
+    "get_method": "method(self)",
+    "get_path": "method(self)",
+    "set": "method(self, **kwargs)"
+   }
+  },
+  "EntityDeleteRequest": {
+   "init": "(self, url, connection, handler, entity_set, entity_key, encode_path=True, response_hook=None)",
+   "members": {
+    "get_encode_path": "method(self)",
+    "get_method": "method(self)",
+    "get_path": "method(self)"
+   }
+  },
+  "EntityGetRequest": {
+   "init": "(self, handler, entity_key, entity_set_proxy, encode_path=True)",
+   "members": {
+    "expand": "method(self, expand)",
+    "get_default_headers": "method(self)",
+    "get_encode_path": "method(self)",
+    "get_path": "method(self)",
+    "get_query_params": "method(self)",
+    "get_value": "method(self, connection=None)",
+    "nav": "method(self, nav_property)",
+    "select": "method(self, select)"
+   }
+  },
+  "EntityKey": {
+   "init": "(self, entity_type, single_key=None, **args)",
+   "members": {
+    "TYPE_COMPLEX": "attribute",
+    "TYPE_SINGLE": "attribute",
+    "key_properties": "property",
+    "to_key_string": "method(self)",
+    "to_key_string_without_parentheses": "method(self)"
+   }
+  },
+  "EntityModifyRequest": {
+   "init": "(self, url, connection, handler, entity_set, entity_key, method='PATCH', encode_path=True, response_hook=None)",
+   "members": {
+    "ALLOWED_HTTP_METHODS": "attribute",
+    "get_body": "method(self)",
+    "get_default_headers": "method(self)",
+    "get_encode_path": "method(self)",
+    "get_method": "method(self)",
+    "get_path": "method(self)",
+    "set": "method(self, **kwargs)"
+   }
+  },
+  "EntityProxy": {
+   "init": "(self, service, entity_set, entity_type, proprties=None, entity_key=None, etag=None)",
+   "members": {
+    "async_getattr": "method(self, attr)",
+    "entity_key": "property",
+    "entity_set": "property",
+    "equals": "method(self, other)",
+    "etag": "property",
+    "get_path": "method(self)",
+    "get_proprty": "method(self, name, connection=None)",
+    "get_value": "method(self, connection=None)",
+    "nav": "method(self, nav_property)",
+    "url": "property"
+   }
+  },
+  "EntitySetProxy": {
+   "init": "(self, service, entity_set, alias=None, parent_last_segment=None)",
+   "members": {
+    "create_entity": "method(self, return_code=201)",
+    "delete_entity": "method(self, key: pyodata.v2.service.EntityKey = None, encode_path=True, **kwargs)",
+    "get_entities": "method(self, encode_path=True)",
+    "get_entity": "method(self, key=None, encode_path=True, **args)",
+    "last_segment": "property",
+    "nav": "method(self, nav_property, key)",
+    "service": "property",
+    "update_entity": "method(self, key=None, method=None, encode_path=True, **kwargs)"
+   }
+  },
+  "ExpressionError": {
+   "members": {}
+  },
+  "FilterExpression": {
+   "init": "(self, **kwargs)",
+   "members": {
+    "expressions": "property",
+    "operator": "property",
+    "other": "property"
+   }
+  },
+  "FunctionContainer": {
+   "init": "(self, service)",
+   "members": {}
+  },
+  "FunctionRequest": {
+   "init": "(self, url, connection, handler, function_import, response_hook=None)",
+   "members": {
+    "get_default_headers": "method(self)",
+    "get_method": "method(self)",
+    "parameter": "method(self, name, value)"
+   }
+  },
+  "GetEntitySetFilter": {
+   "init": "(self, proprty)",
+   "members": {
+    "and_": "staticmethod(*operands)",
+    "build_expression": "staticmethod(operator, operands)",
+    "format_filter": "staticmethod(proprty, operator, value)",
+    "or_": "staticmethod(*operands)"
+   }
+  },
+  "GetEntitySetFilterChainable": {
+   "init": "(self, entity_type, filter_expressions, exprs)",
+   "members": {
+    "OPERATORS": "attribute",
+    "expressions": "property",
+    "proprty_obj": "method(self, name)"
+   }
+  },
+  "GetEntitySetRequest": {
+   "init": "(self, url, connection, handler, last_segment, entity_type, encode_path=True, response_hook=None)",
+   "members": {
+    "filter": "method(self, *args, **kwargs)",
+    "get_encode_path": "method(self)",
+    "get_path": "method(self)"
+   }
+  },
+  "HTTPResponse": "class (external)",
+  "HTTP_CODE_CREATED": "attribute",
+  "HTTP_CODE_OK": "attribute",
+  "HttpError": {
+   "init": "(self, message, response)",
+   "members": {
+    "VendorType": "attribute"
+   }
+  },
+  "LOGGER_NAME": "attribute",
+  "ListWithTotalCount": {
+   "init": "(self, total_count, next_url)",
+   "members": {
+    "next_url": "property",
+    "total_count": "property"
+   }
+  },
+  "MultipartRequest": {
+   "init": "(self, url, connection, handler, request_id=None)",
+   "members": {
+    "add_request": "method(self, request)",
+    "get_body": "method(self)",
+    "get_boundary": "method(self)",
+    "get_default_headers": "method(self)",
+    "handler": "property",
+    "http_response_handler": "staticmethod(request, response)"
+   }
+  },
+  "NavEntityGetRequest": {
+   "init": "(self, handler, master_key, entity_set_proxy, nav_property)",
+   "members": {
+    "get_path": "method(self)"
+   }
+  },
+  "NavEntityProxy": {
+   "init": "(self, parent_entity, prop_name, entity_type, entity)",
+   "members": {
+    "get_path": "method(self)"
+   }
+  },
+  "ODataHttpRequest": {
+   "init": "(self, url, connection, handler, headers=None, response_hook=None)",
+   "members": {
+    "add_headers": "method(self, value)",
+    "async_execute": "method(self)",
+    "custom": "method(self, name, value)",
+    "execute": "method(self)",
+    "get_body": "method(self)",
+    "get_default_headers": "method(self)",
+    "get_headers": "method(self)",
+    "get_method": "method(self)",
+    "get_path": "method(self)",
+    "get_query_params": "method(self)",
+    "handler": "property"
+   }
+  },
+  "ODataHttpResponse": {
+   "init": "(self, headers, status_code, content=None, url=None)",
+   "members": {
+    "from_string": "staticmethod(data)",
+    "json": "method(self)"
+   }
+  },
+  "Parser": "class (external)",
+  "ProgramError": {
+   "members": {}
+  },
+  "PyODataException": {
+   "members": {}
+  },
+  "QueryRequest": {
+   "init": "(self, url, connection, handler, last_segment, response_hook=None)",
+   "members": {
+    "count": "method(self, inline=False)",
+    "expand": "method(self, expand)",
+    "filter": "method(self, filter_val)",
+    "get_default_headers": "method(self)",
+    "get_path": "method(self)",
+    "get_query_params": "method(self)",
+    "next_url": "method(self, next_url)",
+    "order_by": "method(self, order_by)",
+    "select": "method(self, select)",
+    "skip": "method(self, skip)",
+    "top": "method(self, top)"
+   }
+  },
+  "Service": {
+   "init": "(self, url, schema, connection, config=None, response_hook=None)",
+   "members": {
+    "async_http_get": "method(self, path, connection=None)",
+    "config": "property",
+    "connection": "property",
+    "create_batch": "method(self, batch_id=None)",
+    "create_changeset": "method(self, changeset_id=None)",
+    "entity_sets": "property",
+    "functions": "property",
+    "http_get": "method(self, path, connection=None)",
+    "http_get_odata": "method(self, path, handler, connection=None)",
+    "response_hook": "property",
+    "retain_null": "property",
+    "schema": "property",
+    "url": "property"
+   }
+  },
+  "decode_multipart": "function(data, content_type)",
+  "encode_multipart": "function(boundary, http_requests)",
+  "json": "module",
+  "logging": "module",
+  "model": "module",
+  "partial": "class (external)",
+  "quote": "function (external)",
+  "random": "module",
+  "urlencode": "function (external)",
+  "urljoin": "function(*path)",
+  "urlparse": "function (external)"
+ },
+ "pyodata.vendor": {
+  "SAP": "module"
+ },
+ "pyodata.vendor.SAP": {
+  "BusinessGatewayError": {
+   "init": "(self, message, response)",
+   "members": {}
+  },
+  "HttpError": {
+   "init": "(self, message, response)",
+   "members": {
+    "VendorType": "attribute"
+   }
+  },
+  "add_btp_token_to_session": "function(session, key, user, password)",
+  "json": "module",
+  "json_get": "function(obj, member, typ, default=None)",
+  "logging": "module",
+  "sap_header_error_hook": "function(response)"
+ }
+}
