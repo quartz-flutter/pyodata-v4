@@ -43,11 +43,11 @@ the safety net that makes the later phases checkable.
 | | |
 |---|---|
 | Phase | 0 complete — the safety net is in place; phase 1 is next |
-| v2 baseline | 396 tests passing, 93% line coverage, Python 3.11 / lxml 6.x (`make test`) |
+| v2 baseline | 393 tests passing, 93% line coverage, Python 3.11 / lxml 6.x (`make test`) |
 | v4 code | none yet, by design — phase 0 adds no `pyodata/` source changes |
 | Gates live | G1 API snapshot, G2 wire-format golden tests, coverage floors in CI |
 | Normative specs | obtained and vendored, see [research/resources.md](research/resources.md) and [the provenance record](../../tests/fixtures/v4/PROVENANCE.md) |
-| Branch | `claude/phase-0-setup-jgigth` |
+| Branches | feature branches off `master`, per CLAUDE.md; phase 0 landed on `claude/phase-0-setup-jgigth` |
 | Last updated | 2026-08-30 |
 
 ### What phase 0 delivered

@@ -47,7 +47,7 @@ pyodata/
   v2/model.py        ~2.8k lines. CSDL 1.0/2.0 XML parser -> Schema object graph
   v2/service.py      ~2.0k lines. Request builders, proxies, JSON decoding, batch
   vendor/SAP.py      SAP BTP auth helper + SAP error-header response hook
-tests/               396 tests, pytest, ~93% line coverage on pyodata/
+tests/               393 tests, pytest, ~93% line coverage on pyodata/
   fixtures/v4/       pinned OASIS ABNF corpus + annotation vocabularies
 docs/usage/*.rst     user guide (sphinx)
 docs/v4/             the v4 project: research, plan, fixtures  <- start here
@@ -71,8 +71,8 @@ make check                      # lint + coverage-floors
 make doc                        # sphinx into docs/_build/html
 ```
 
-**Verified baseline (Python 3.11, lxml 6.x): 396 passed, 93% total coverage
-under `make test`; 364 passed, 92% under the fast unit run.**
+**Verified baseline (Python 3.11, lxml 6.x): 393 passed, 93% total coverage
+under `make test`; 361 passed, 92% under the fast unit run.**
 Record any deviation from this baseline; do not let it drift downward.
 `make coverage-floors` enforces it — the per-module floors live in
 `tests/check_coverage_floors.py` and are a ratchet: raise them, never lower
@@ -122,9 +122,34 @@ that expectation belongs in the same commit as the fix.
 
 ## Git
 
-Work on `claude/odata-v4-compatibility-50ejxo`. Push with
-`git push -u origin claude/odata-v4-compatibility-50ejxo`. Do not open a pull
-request unless asked.
+Work on a feature branch. Never commit directly to `master` — note the default
+branch here is `master`, not `main`. Branch from an up-to-date `master`:
+
+```bash
+git fetch origin master
+git checkout -b <branch> origin/master   # e.g. claude/phase-1-version-detection
+git push -u origin <branch>              # same branch name on every push
+```
+
+If a task names a branch, use that name exactly; otherwise pick a short
+descriptive one. The convention for agent-authored work here is
+`claude/<topic>-<suffix>`.
+
+- **Do not open a pull request unless asked.**
+- One logical change per commit (`CONTRIBUTING.md`). No "fix previous commit"
+  commits — amend or rebase instead. Messages explain *why*, not just what.
+- Rule R4 of the compatibility contract is a git rule: a commit either
+  relocates code with zero behaviour change, or it changes behaviour, never
+  both. Phase 2's extraction into `pyodata/core/` is only reviewable if this
+  holds.
+- Do not rewrite history on a branch anyone else may have checked out — no
+  force-push, rebase or amend once it is shared. On your own unshared branch it
+  is fine.
+- If a branch's pull request is already merged, that branch is finished. Do not
+  stack follow-up commits on it; start a fresh branch from `master`.
+- Run the gates before pushing, not after: `python3 -m pytest tests -q
+  --ignore=tests/integration` at minimum, `make check` for anything touching
+  `pyodata/`.
 
 ## Traps found the hard way
 
